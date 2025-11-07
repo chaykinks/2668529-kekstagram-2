@@ -75,7 +75,7 @@ const resetEffects = () => {
 
 sliderElement.noUiSlider.on('update', (values, handle) => {
   const value = values[handle];
-  const normalizedValue = parseFloat(value).toString(); // нормализуем
+  const normalizedValue = parseFloat(value).toString();
   effectLevelValue.value = normalizedValue;
   applyEffect(currentEffect, normalizedValue);
 });

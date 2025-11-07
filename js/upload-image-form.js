@@ -153,17 +153,18 @@ const unblockSubmitButton = () => {
 uploadImageForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
-  if (isValid) {
-    blockSubmitButton();
-    try {
-      await sendData(new FormData(uploadImageForm));
-      showUploadSuccessMessage();
-      clearFormFields();
-      closeUploadImageForm();
-    } catch {
-      showUploadErrorMessage();
-    } finally {
-      unblockSubmitButton();
-    }
+  if (!isValid) {
+    return;
+  }
+  blockSubmitButton();
+  try {
+    await sendData(new FormData(uploadImageForm));
+    showUploadSuccessMessage();
+    clearFormFields();
+    closeUploadImageForm();
+  } catch {
+    showUploadErrorMessage();
+  } finally {
+    unblockSubmitButton();
   }
 });
