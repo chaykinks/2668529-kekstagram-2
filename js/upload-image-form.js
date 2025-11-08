@@ -38,12 +38,25 @@ const onFormCancelButtonClick = (evt) => {
   closeUploadImageForm();
 };
 
+const onOutsideClickFormClose = (evt) => {
+  const isClickInsideForm = evt.target.closest('.img-upload__wrapper');
+  const isClickOnError = evt.target.closest('.error');
+  const isClickOnSuccess = evt.target.closest('.success');
+
+  if (!isClickInsideForm && !isClickOnError && !isClickOnSuccess) {
+    evt.preventDefault();
+    clearFormFields();
+    closeUploadImageForm();
+  }
+};
+
 function closeUploadImageForm() {
   document.body.classList.remove('modal-open');
   uploadImageModal.classList.add('hidden');
   resetScale();
   resetEffects();
   document.removeEventListener('keydown', onEscapeButtonFormClose);
+  document.removeEventListener('click', onOutsideClickFormClose);
   uploadModalCancelButton.removeEventListener('click', onFormCancelButtonClick);
   uploadFile.value = '';
 }
@@ -56,6 +69,7 @@ const openUploadImageForm = () => {
   setupEffects(uploadImageForm);
   uploadModalCancelButton.addEventListener('click', onFormCancelButtonClick);
   document.addEventListener('keydown', onEscapeButtonFormClose);
+  document.addEventListener('click', onOutsideClickFormClose);
 };
 
 function clearFormFields () {
