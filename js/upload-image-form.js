@@ -101,6 +101,9 @@ function closeUploadSuccessMessage() {
   const uploadSuccessMessage = document.querySelector('.success');
   if (uploadSuccessMessage) {
     uploadSuccessMessage.remove();
+    document.removeEventListener('keydown', onUploadSuccessEscKeydown);
+    document.removeEventListener('click', onUploadSuccessOutsideClick);
+    document.removeEventListener('click', onUploadSuccessButtonClick);
   }
 }
 
@@ -108,9 +111,17 @@ const showUploadSuccessMessage = () => {
   const UploadSuccessMessage = successModalTemplate.cloneNode(true);
   document.body.appendChild(UploadSuccessMessage);
 
-  document.addEventListener('click', onUploadSuccessButtonClick);
+  const inner = UploadSuccessMessage.querySelector('.success__inner');
+  if (inner) {
+    inner.addEventListener('click', (evt) => evt.stopPropagation());
+  }
+
   document.addEventListener('keydown', onUploadSuccessEscKeydown);
   document.addEventListener('click', onUploadSuccessOutsideClick);
+  const closeButton = UploadSuccessMessage.querySelector('.success__button');
+  if (closeButton) {
+    closeButton.addEventListener('click', closeUploadSuccessMessage);
+  }
 };
 
 const onUploadErrorEscKeydown = (evt) => {
@@ -147,9 +158,17 @@ const showUploadErrorMessage = () => {
   const uploadErrorMessage = errorModalTemplate.cloneNode(true);
   document.body.appendChild(uploadErrorMessage);
 
+  const inner = uploadErrorMessage.querySelector('.error__inner');
+  if (inner) {
+    inner.addEventListener('click', (evt) => evt.stopPropagation());
+  }
+
   document.addEventListener('keydown', onUploadErrorEscKeydown, true);
   document.addEventListener('click', onUploadErrorOutsideClick);
-  document.addEventListener('click', onUploadErrorButtonClick);
+  const closeButton = uploadErrorMessage.querySelector('.error__button');
+  if (closeButton) {
+    closeButton.addEventListener('click', closeUploadErrorMessage);
+  }
 };
 
 uploadFile.addEventListener('change', openUploadImageForm);
