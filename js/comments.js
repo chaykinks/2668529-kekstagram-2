@@ -33,17 +33,21 @@ const showNextComments = () => {
   currentCount = currentCount + COUNT_STEP;
 };
 
+const onCommentsLoaderClick = () => {
+  showNextComments();
+};
+
 const clearComments = () => {
   currentCount = 0;
   socialComments.innerHTML = '';
   commentsLoader.classList.remove('hidden');
-  commentsLoader. removeEventListener('click', showNextComments);
+  commentsLoader. removeEventListener('click', onCommentsLoaderClick);
 };
 
 const showComments = (currentPictureComments) => {
   comments = currentPictureComments;
   showNextComments();
-  commentsLoader.addEventListener('click', showNextComments);
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
 };
 
 export { showComments, clearComments };
