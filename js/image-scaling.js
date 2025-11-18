@@ -38,6 +38,7 @@ const setupScaling = () => {
 };
 
 const resetScale = () => {
+  currentScale = ScaleSettings.DEFAULT;
   imagePreview.style.transform = `scale(${ScaleSettings.DEFAULT / 100})`;
   scaleControlValue.value = `${ScaleSettings.DEFAULT}%`;
 };
