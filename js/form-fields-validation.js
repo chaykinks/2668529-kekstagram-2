@@ -35,7 +35,7 @@ const validateHashtagsUnique = (value) => {
 
 const validateDescription = (value) => value.length <= ValidationRules.MAX_COMMENT_LENGTH;
 
-const setupValidation = () => {
+const defineValidation = () => {
   const pristine = new Pristine(uploadImageForm, {
     classTo: 'img-upload__field-wrapper',
     errorTextParent: 'img-upload__field-wrapper',
@@ -51,4 +51,4 @@ const setupValidation = () => {
   return pristine;
 };
 
-export { setupValidation };
+export { defineValidation };

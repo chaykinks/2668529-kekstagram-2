@@ -1,6 +1,6 @@
-import { setupValidation } from './form-fields-validation.js';
-import { setupScaling, resetScale } from './image-scaling.js';
-import { setupEffects, resetEffects } from './slider-effects-control.js';
+import { defineValidation } from './form-fields-validation.js';
+import { defineScaling, resetScale } from './image-scaling.js';
+import { defineEffects, resetEffects } from './slider-effects-control.js';
 import { sendData } from './api.js';
 import { showUploadErrorMessage, showUploadSuccessMessage, isUploadMessageOpen } from './upload-messages.js';
 
@@ -66,9 +66,9 @@ function closeUploadImageForm() {
 const openUploadImageForm = () => {
   document.body.classList.add('modal-open');
   uploadImageModal.classList.remove('hidden');
-  pristine = setupValidation(uploadImageForm);
-  setupScaling(uploadImageForm);
-  setupEffects(uploadImageForm);
+  pristine = defineValidation(uploadImageForm);
+  defineScaling(uploadImageForm);
+  defineEffects(uploadImageForm);
   uploadModalCancelButton.addEventListener('click', onFormCancelButtonClick);
   document.addEventListener('keydown', onEscapeButtonFormClose);
   document.addEventListener('click', onOutsideClickFormClose);

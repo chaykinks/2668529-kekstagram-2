@@ -81,11 +81,11 @@ sliderElement.noUiSlider.on('update', (values, handle) => {
   applyEffect(currentEffect, normalizedValue);
 });
 
-const setupEffects = () => {
+const defineEffects = () => {
   effectsList.addEventListener('change', (evt) => {
     setEffect(evt.target.value);
   });
   setEffect('none');
 };
 
-export { setupEffects, resetEffects };
+export { defineEffects, resetEffects };

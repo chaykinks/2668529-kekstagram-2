@@ -32,7 +32,7 @@ const onBiggerSizeButtonClick = () => {
   }
 };
 
-const setupScaling = () => {
+const defineScaling = () => {
   smallerSizeButton.addEventListener('click', onSmallerSizeButtonClick);
   biggerSizeButton.addEventListener('click', onBiggerSizeButtonClick);
 };
@@ -43,4 +43,4 @@ const resetScale = () => {
   scaleControlValue.value = `${ScaleSettings.DEFAULT}%`;
 };
 
-export { setupScaling, resetScale };
+export { defineScaling, resetScale };
