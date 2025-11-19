@@ -1,12 +1,3 @@
-const sliderElement = document.querySelector('.effect-level__slider');
-const imagePreview = document.querySelector('.img-upload__preview img');
-const effectLevelValue = document.querySelector('.effect-level__value');
-const effectLevelContainer = document.querySelector('.img-upload__effect-level');
-const effectsList = document.querySelector('.effects__list');
-const defaultEffect = document.querySelector('#effect-none');
-
-let currentEffect = 'none';
-
 const EFFECTS = {
   none: {
     filter: () => '',
@@ -33,6 +24,15 @@ const EFFECTS = {
     options: { range: { min: 1, max: 3 }, start: 3, step: 0.1 },
   },
 };
+
+const sliderElement = document.querySelector('.effect-level__slider');
+const imagePreview = document.querySelector('.img-upload__preview img');
+const effectLevelValue = document.querySelector('.effect-level__value');
+const effectLevelContainer = document.querySelector('.img-upload__effect-level');
+const effectsList = document.querySelector('.effects__list');
+const defaultEffect = document.querySelector('#effect-none');
+
+let currentEffect = 'none';
 
 noUiSlider.create(sliderElement, {
   range: { min: 0, max: 100 },

@@ -4,6 +4,11 @@ import { defineEffects, resetEffects } from './slider-effects-control.js';
 import { sendData } from './api.js';
 import { showUploadErrorMessage, showUploadSuccessMessage, isUploadMessageOpen } from './upload-messages.js';
 
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикуется...'
+};
+
 const uploadImageForm = document.querySelector('.img-upload__form');
 const uploadFile = uploadImageForm.querySelector('#upload-file');
 const uploadImageModal = uploadImageForm.querySelector('.img-upload__overlay');
@@ -11,11 +16,6 @@ const uploadModalCancelButton = uploadImageModal.querySelector('#upload-cancel')
 const hashTagInput = uploadImageForm.querySelector('.text__hashtags');
 const descriptionInput = uploadImageForm.querySelector('.text__description');
 const submitButton = uploadImageForm.querySelector('#upload-submit');
-
-const SubmitButtonText = {
-  IDLE: 'Опубликовать',
-  SENDING: 'Публикуется...'
-};
 
 let pristine;
 
@@ -58,14 +58,11 @@ const onUploadFileChange = () => {
 
 const onUploadImageFormSubmit = async (evt) => {
   evt.preventDefault();
-
   const isValid = pristine.validate();
   if (!isValid) {
     return;
   }
-
   blockSubmitButton();
-
   try {
     await sendData(new FormData(uploadImageForm));
     showUploadSuccessMessage();
