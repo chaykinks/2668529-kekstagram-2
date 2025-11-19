@@ -52,6 +52,32 @@ const onOutsideClickFormClose = (evt) => {
   }
 };
 
+const onUploadFileChange = () => {
+  openUploadImageForm();
+};
+
+const onUploadImageFormSubmit = async (evt) => {
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+  if (!isValid) {
+    return;
+  }
+
+  blockSubmitButton();
+
+  try {
+    await sendData(new FormData(uploadImageForm));
+    showUploadSuccessMessage();
+    clearFormFields();
+    closeUploadImageForm();
+  } catch {
+    showUploadErrorMessage();
+  } finally {
+    unblockSubmitButton();
+  }
+};
+
 function closeUploadImageForm() {
   document.body.classList.remove('modal-open');
   uploadImageModal.classList.add('hidden');
@@ -63,7 +89,7 @@ function closeUploadImageForm() {
   uploadFile.value = '';
 }
 
-const openUploadImageForm = () => {
+function openUploadImageForm() {
   document.body.classList.add('modal-open');
   uploadImageModal.classList.remove('hidden');
   pristine = defineValidation(uploadImageForm);
@@ -72,40 +98,22 @@ const openUploadImageForm = () => {
   uploadModalCancelButton.addEventListener('click', onFormCancelButtonClick);
   document.addEventListener('keydown', onEscapeButtonFormClose);
   document.addEventListener('click', onOutsideClickFormClose);
-};
+}
+
+function blockSubmitButton() {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+}
+
+function unblockSubmitButton() {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+}
 
 function clearFormFields () {
   uploadImageForm.reset();
   pristine.reset();
 }
 
-uploadFile.addEventListener('change', openUploadImageForm);
-
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = SubmitButtonText.SENDING;
-};
-
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = SubmitButtonText.IDLE;
-};
-
-uploadImageForm.addEventListener('submit', async (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (!isValid) {
-    return;
-  }
-  blockSubmitButton();
-  try {
-    await sendData(new FormData(uploadImageForm));
-    showUploadSuccessMessage();
-    clearFormFields();
-    closeUploadImageForm();
-  } catch {
-    showUploadErrorMessage();
-  } finally {
-    unblockSubmitButton();
-  }
-});
+uploadFile.addEventListener('change', onUploadFileChange);
+uploadImageForm.addEventListener('submit', onUploadImageFormSubmit);
